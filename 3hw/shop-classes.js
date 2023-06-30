@@ -27,15 +27,26 @@ class GoodsList { // класс для хранения каталога тов�
     get list() { // возвращает массив доступных для продажи товаров в соответствии с установленным фильтром и сортировкой по полю Price
         if (this.filter) {
             const result = this.#goods.filter(good => this.filter.test(good.name));
+            if ((this.sortPrice) && (this.sortDir)) {
+                const resultSort = result.sort((good1, good2) => good1.price > good2.price ? 1 : -1);
+                return(resultSort);
+            }
+            if ((this.sortPrice) && (!this.sortDir)) {
+                const resultSort = result.sort((good1, good2) => good1.price > good2.price ? -1 : 1);
+                return(resultSort);
+            }
             return(result);
-        } 
+        }
+
         if ((!this.filter) && (!this.sortPrice)) {
             return this.#goods;
         }
+
         if ((this.sortPrice) && (this.sortDir)) {
             const result = this.#goods.sort((good1, good2) => good1.price > good2.price ? 1 : -1);
             return(result);
         }
+        
         else if ((this.sortPrice) && (!this.sortDir)) {
             const result = this.#goods.sort((good1, good2) => good1.price > good2.price ? -1 : 1);
             return(result);
@@ -122,8 +133,8 @@ class Basket { // класс для хранения данных о корзи�
 const good1 = new Good (1, "Рубашка", "Зеленая", ["XS", "S", "M"], 1000, true);
 const good2 = new Good (2, "Свитер", "Мужской", ["L", "XL"], 1500, true);
 const good3 = new Good (3, "Джинсы", "Черные", ["M", "L"], 1500, false);
-const good4 = new Good (4, "Шорты", "Микрофибра", [36, 38], 2000, true);
-const good5 = new Good (5, "Свитер", "Женский", ["S", "M"], 2500, true);
+const good4 = new Good (4, "Свитер", "Детский", ["XS", "S"], 1000, true);
+const good5 = new Good (5, "Свитер", "Женский", ["M", "L"], 2500, true);
 
 const goodsList = new GoodsList([]);
 
@@ -152,31 +163,43 @@ console.log(`Отсортированный список по цене по во
 const sortedGoodsList2 = new GoodsList(goodsList.list, undefined, true, false);
 console.log(`Отсортированный список по цене по убыванию:`, sortedGoodsList2.list);
 
+const sortedAndFilteredGoodsList = new GoodsList(goodsList.list, /тер/, true, true);
+console.log(`Отфильтрованный список по ключу ${sortedAndFilteredGoodsList.filter} + отсортированный по возрастанию:`, sortedAndFilteredGoodsList.list);
+
+const sortedAndFilteredGoodsList1 = new GoodsList(goodsList.list, /тер/, true, false);
+console.log(`Отфильтрованный список по ключу ${sortedAndFilteredGoodsList1.filter} + отсортированный по убыванию:`, sortedAndFilteredGoodsList1.list);
+
 goodsList.remove(1);
 
 console.log(goodsList.list);
 
-basket.add(good1, 3);
-basket.add(good2, 5);
-basket.add(good3, 2);
-basket.add(good3, 4);
-basket.add(good4, 1);
+const basketGood1 = new BasketGood(good1.id, good1.name, good1.description, good1.sizes, good1.price, good1.available);
+const basketGood2 = new BasketGood(good2.id, good2.name, good2.description, good2.sizes, good2.price, good2.available);
+const basketGood3 = new BasketGood(good3.id, good3.name, good3.description, good3.sizes, good3.price, good3.available);
+const basketGood4 = new BasketGood(good4.id, good4.name, good4.description, good4.sizes, good4.price, good4.available);
+const basketGood5 = new BasketGood(good5.id, good5.name, good5.description, good5.sizes, good5.price, good5.available);
 
-console.log(good1.amount);
+basket.add(basketGood1, 3);
+basket.add(basketGood2, 5);
+basket.add(basketGood3, 2);
+basket.add(basketGood3, 4);
+basket.add(basketGood4, 1);
+
+console.log(basketGood1.amount);
 
 console.log(`Товары в корзине:`, basket);
 console.log(`Общее количество товаров:`, basket.totalSum);
 console.log(`Общая стоимость товаров:`, basket.totalAmount);
 
-basket.remove(good3, 6);
-basket.remove(good2, 4);
+basket.remove(basketGood3, 6);
+basket.remove(basketGood2, 4);
 
 console.log(`Товары в корзине:`, basket);
 console.log(`Общее количество товаров:`, basket.totalSum);
 console.log(`Общая стоимость товаров:`, basket.totalAmount);
 
-good1.setAvailable(false);
-good4.setAvailable(false);
+basketGood1.setAvailable(false);
+basketGood4.setAvailable(false);
 
 basket.removeUnavailable();
 console.log(`Доступные товары:`, basket);

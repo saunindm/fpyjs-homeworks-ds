@@ -86,7 +86,7 @@ console.log(cart)
 
 console.log(getTotal(cart, goods))
 
-removeItem(cart.length - 1)
+removeItem(1)
 console.log(cart)
 
 clearCart()
