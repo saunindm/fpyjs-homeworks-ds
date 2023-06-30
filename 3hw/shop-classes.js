@@ -25,32 +25,21 @@ class GoodsList { // класс для хранения каталога тов�
     }
 
     get list() { // возвращает массив доступных для продажи товаров в соответствии с установленным фильтром и сортировкой по полю Price
-        if (this.filter) {
-            const result = this.#goods.filter(good => this.filter.test(good.name));
-            if ((this.sortPrice) && (this.sortDir)) {
-                const resultSort = result.sort((good1, good2) => good1.price > good2.price ? 1 : -1);
-                return(resultSort);
-            }
-            if ((this.sortPrice) && (!this.sortDir)) {
-                const resultSort = result.sort((good1, good2) => good1.price > good2.price ? -1 : 1);
-                return(resultSort);
-            }
-            return(result);
-        }
+        let result = this.#goods;
 
-        if ((!this.filter) && (!this.sortPrice)) {
-            return this.#goods;
+        if (this.filter) {
+            result = this.#goods.filter(good => this.filter.test(good.name));
         }
 
         if ((this.sortPrice) && (this.sortDir)) {
-            const result = this.#goods.sort((good1, good2) => good1.price > good2.price ? 1 : -1);
-            return(result);
+            result = result.sort((good1, good2) => good1.price > good2.price ? 1 : -1);
         }
         
         else if ((this.sortPrice) && (!this.sortDir)) {
-            const result = this.#goods.sort((good1, good2) => good1.price > good2.price ? -1 : 1);
-            return(result);
+            result = result.sort((good1, good2) => good1.price > good2.price ? -1 : 1);
         }
+        
+        return result;
     }
 
     add(newGood) { // добавление товара в каталог
