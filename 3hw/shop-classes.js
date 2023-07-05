@@ -79,19 +79,22 @@ class Basket { // класс для хранения данных о корзи�
     }
 
     add(good, amount) { // Добавляет товар в корзину, если товар уже есть увеличивает количество
-        let contains = false;
-        if (this.goods.length != 0) { 
-            let i;
-            for (i = 0; i < this.goods.length; i++) {
-                if (this.goods[i].id === good.id) {
-                    this.goods[i].amount = this.goods[i].amount + amount;
-                    contains = true;
-                }
-            }
-        }
-        if (((this.goods.length != 0) && (contains === false)) || (this.goods.length === 0)) {
-            this.goods.push(good);
-            good.amount = amount;
+        if (this.goods.find((element) => element.id === good.id)) {
+            return (this.goods[
+            this.goods.findIndex((element) => element.id === good.id)
+            ].amount += amount);
+        } 
+        else {
+            let basketGood = new BasketGood(
+                good.id,
+                good.name,
+                good.description,
+                good.sizes,
+                good.price,
+                good.available,
+                amount
+            );
+            return this.goods.push(basketGood);
         }
     }
 
@@ -109,13 +112,27 @@ class Basket { // класс для хранения данных о корзи�
         }
     }
 
+    update(good) {
+        if (this.goods.find((element) => element.id === good.id)) {
+            let updatedGood = new BasketGood(
+                this.goods[this.goods.findIndex((element) => element.id === good.id)].id = good.id,
+                this.goods[this.goods.findIndex((element) => element.id === good.id)].name = good.name,
+                this.goods[this.goods.findIndex((element) => element.id === good.id)].description = good.description,
+                this.goods[this.goods.findIndex((element) => element.id === good.id)].sizes = good.sizes,
+                this.goods[this.goods.findIndex((element) => element.id === good.id)].price = good.price,
+                this.goods[this.goods.findIndex((element) => element.id === good.id)].available = good.available,
+                this.goods[this.goods.findIndex((element) => element.id === good.id)].amount
+            )
+            this.goods.splice(this.goods.findIndex((element) => element.id === good.id), 1, updatedGood);
+        } 
+    }
+
     clear() { // Очищает содержимое корзины
         this.goods.splice(0, this.goods.length);
     }
 
     removeUnavailable() { // Удаляет из корзины товары, имеющие признак available === false (использовать filter())  
-        const unvailableGoods = this.goods.filter(good => good.available === false)
-        this.goods = this.goods.filter(obj => !unvailableGoods.some(obj1 => obj.available === obj1.available));
+        return (this.goods = this.goods.filter((good) => good.available === true));
     }
 }
 
@@ -126,8 +143,6 @@ const good4 = new Good (4, "Свитер", "Детский", ["XS", "S"], 1000, 
 const good5 = new Good (5, "Свитер", "Женский", ["M", "L"], 2500, true);
 
 const goodsList = new GoodsList([]);
-
-const basket = new Basket([]);
 
 console.log(good3);
 
@@ -162,33 +177,32 @@ goodsList.remove(1);
 
 console.log(goodsList.list);
 
-const basketGood1 = new BasketGood(good1.id, good1.name, good1.description, good1.sizes, good1.price, good1.available);
-const basketGood2 = new BasketGood(good2.id, good2.name, good2.description, good2.sizes, good2.price, good2.available);
-const basketGood3 = new BasketGood(good3.id, good3.name, good3.description, good3.sizes, good3.price, good3.available);
-const basketGood4 = new BasketGood(good4.id, good4.name, good4.description, good4.sizes, good4.price, good4.available);
-const basketGood5 = new BasketGood(good5.id, good5.name, good5.description, good5.sizes, good5.price, good5.available);
+const basket = new Basket([]);
 
-basket.add(basketGood1, 3);
-basket.add(basketGood2, 5);
-basket.add(basketGood3, 2);
-basket.add(basketGood3, 4);
-basket.add(basketGood4, 1);
-
-console.log(basketGood1.amount);
+basket.add(good1, 3);
+basket.add(good2, 5);
+basket.add(good3, 2);
+basket.add(good3, 4);
+basket.add(good4, 1);
 
 console.log(`Товары в корзине:`, basket);
 console.log(`Общее количество товаров:`, basket.totalSum);
 console.log(`Общая стоимость товаров:`, basket.totalAmount);
 
-basket.remove(basketGood3, 6);
-basket.remove(basketGood2, 4);
+basket.remove(good3, 6);
+basket.remove(good2, 4);
 
 console.log(`Товары в корзине:`, basket);
 console.log(`Общее количество товаров:`, basket.totalSum);
 console.log(`Общая стоимость товаров:`, basket.totalAmount);
 
-basketGood1.setAvailable(false);
-basketGood4.setAvailable(false);
+good1.setAvailable(false);
+good4.setAvailable(false);
+good2.price = 2000;
+
+basket.update(good1);
+basket.update(good4);
+basket.update(good2);
 
 basket.removeUnavailable();
 console.log(`Доступные товары:`, basket);
