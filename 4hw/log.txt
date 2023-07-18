@@ -1,0 +1,73 @@
+Number to guess: 718
+500
+Try Again! You guessed too small. Tries: 1
+Number to guess: 551
+Number to guess: 427
+5
+Try Again! You guessed too small. Tries: 1
+500
+Try Again! You guessed too high. Tries: 2
+300
+Try Again! You guessed too small. Tries: 3
+400
+Try Again! You guessed too small. Tries: 4
+450
+Try Again! You guessed too high. Tries: 5
+40
+Try Again! You guessed too small. Tries: 6
+440
+Try Again! You guessed too high. Tries: 7
+430
+Try Again! You guessed too high. Tries: 8
+420
+Try Again! You guessed too small. Tries: 9
+425
+Try Again! You guessed too small. Tries: 10
+427
+You guessed right! Tries: 11. For game log check logs.txt.
+Number to guess: 146
+500
+Try Again! You guessed too high. Tries: 1
+400
+Try Again! You guessed too high. Tries: 2
+300
+Try Again! You guessed too high. Tries: 3
+200
+Try Again! You guessed too high. Tries: 4
+100
+Try Again! You guessed too small. Tries: 5
+140
+Try Again! You guessed too small. Tries: 6
+160
+Try Again! You guessed too high. Tries: 7
+150
+Try Again! You guessed too high. Tries: 8
+145
+Try Again! You guessed too small. Tries: 9
+148
+Try Again! You guessed too high. Tries: 10
+147
+Try Again! You guessed too high. Tries: 11
+146
+You guessed right! Tries: 12.
+Number to guess: 977
+500
+Try Again! You guessed too small. Tries: 1
+400
+Try Again! You guessed too small. Tries: 2
+600
+Try Again! You guessed too small. Tries: 3
+700
+Try Again! You guessed too small. Tries: 4
+800
+Try Again! You guessed too small. Tries: 5
+900
+Try Again! You guessed too small. Tries: 6
+950
+Try Again! You guessed too small. Tries: 7
+970
+Try Again! You guessed too small. Tries: 8
+980
+Try Again! You guessed too high. Tries: 9
+977
+You guessed right! Tries: 10.

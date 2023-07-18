@@ -112,19 +112,23 @@ class Basket { // класс для хранения данных о корзи�
         }
     }
 
-    update(good) {
-        if (this.goods.find((element) => element.id === good.id)) {
+    update(good) { // Выполняет обновление данных о товаре в корзине после изменения данных о товарах в каталоге
+        const i = this.goods.findIndex((element) => element.id === good.id);
+        if (i >= 0) {
             let updatedGood = new BasketGood(
-                this.goods[this.goods.findIndex((element) => element.id === good.id)].id = good.id,
-                this.goods[this.goods.findIndex((element) => element.id === good.id)].name = good.name,
-                this.goods[this.goods.findIndex((element) => element.id === good.id)].description = good.description,
-                this.goods[this.goods.findIndex((element) => element.id === good.id)].sizes = good.sizes,
-                this.goods[this.goods.findIndex((element) => element.id === good.id)].price = good.price,
-                this.goods[this.goods.findIndex((element) => element.id === good.id)].available = good.available,
-                this.goods[this.goods.findIndex((element) => element.id === good.id)].amount
+                this.goods[i].id = good.id,
+                this.goods[i].name = good.name,
+                this.goods[i].description = good.description,
+                this.goods[i].sizes = good.sizes,
+                this.goods[i].price = good.price,
+                this.goods[i].available = good.available,
+                this.goods[i].amount
             )
-            this.goods.splice(this.goods.findIndex((element) => element.id === good.id), 1, updatedGood);
-        } 
+            this.goods.splice(i, 1, updatedGood);
+        }
+        else {
+            console.log('Nothing to update');
+        }
     }
 
     clear() { // Очищает содержимое корзины
@@ -206,6 +210,8 @@ basket.update(good2);
 
 basket.removeUnavailable();
 console.log(`Доступные товары:`, basket);
+
+basket.update(good1);
 
 basket.clear();
 console.log(`Товары в корзине:`, basket);
